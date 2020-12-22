@@ -84,6 +84,7 @@ class Post
         $title = $post['title'];
         $content = $post['content'];
         $rating = $post['rating'];
+        $dateCreated = substr($post['datePosted'], 0, 10);
         $html =
         "<div class=\"card mb-3\">
             <div class=\"card-header\">
@@ -91,17 +92,22 @@ class Post
             </div>
             <div class=\"card-body\">
                 <p class=\"card-text\">{$content}</p>
-                <div class=\"d-flex justify-content-end mb-0\">
-                <form method=\"POST\" class=\"mb-0\">
-                <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
-                <input type=\"hidden\" name=\"currentRating\" value=\"{$rating}\">
-                <button type=\"submit\" name=\"rating\" value=\"1\" class=\"btn btn-success\"><i class=\"fa fa-arrow-up\"></i></button>
-                <button type=\"submit\" name=\"rating\" value=\"-1\" class=\"btn btn-danger\"><i class=\"fa fa-arrow-down\"></i></button>
-                </form>
-                </div>
             </div>
             <div class=\"card-footer\">
-                {$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i>
+            <div class=\"row\">
+                <div class=\"col-1\">{$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i></div>
+                <div class=\"col-4 mb-0\">
+                    <form method=\"POST\" class=\"mb-0\">
+                    <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
+                    <input type=\"hidden\" name=\"currentRating\" value=\"{$rating}\">
+                    <button type=\"submit\" name=\"rating\" value=\"1\" class=\"btn btn-success\"><i class=\"fa fa-arrow-up\"></i></button>
+                    <button type=\"submit\" name=\"rating\" value=\"-1\" class=\"btn btn-danger\"><i class=\"fa fa-arrow-down\"></i></button>
+                    </form>
+                </div>
+                <div class=\"col-7 d-flex justify-content-end\">
+                    <a href=\"search-posts.php?filter=datePosted&value={$dateCreated}\" class=\"text-muted mb-0\">{$dateCreated}</a>
+                </div>
+            </div>
             </div>
         </div>";
         return $html;
@@ -128,7 +134,7 @@ class Post
                 </div>
             </div>
             <div class=\"card-footer\">
-                {$rating} / 5 <i style=\"color: gold;\" class=\"fa fa-star\"></i>
+                {$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i>
             </div>
         </div>";
         return $html;

@@ -29,6 +29,8 @@ if (isset($_GET['filter']) && isset($_GET['value'])) {
                     echo "<option {$selected} value=\"title\">Naslov</option>";
                     $selected = $filter === "content" ? "selected" : "";
                     echo "<option {$selected} value=\"content\">Sadržaj</option>";
+                    $selected = $filter === "datePosted" ? "selected" : "";
+                    echo "<option {$selected} value=\"datePosted\">Datum objave</option>";
                     $selected = $filter === "rating-higher" ? "selected" : "";
                     echo "<option {$selected} value=\"rating-higher\">Ocena veća od</option>";
                     $selected = $filter === "rating-lower" ? "selected" : "";

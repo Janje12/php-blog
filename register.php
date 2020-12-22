@@ -1,8 +1,7 @@
 <?php
-session_start();
 include('components/header.php');
+require_once('db/dbconnect.php');
 require_once('models/user.php');
-print_r($_SESSION);
 $message = '';
 if (isset($_POST['username']) && isset($_POST['password']) && $_POST['email'] && $_POST['firstName'] && $_POST['lastName']) {
     $username = $_POST['username'];
@@ -11,12 +10,14 @@ if (isset($_POST['username']) && isset($_POST['password']) && $_POST['email'] &&
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $user = new User($firstName, $lastName, $username, $password, $email);
-
     if (User::register($user)) {
         $message = 'Uspešno ste se registrovali!';
         header('Location: '. 'login.php');
-    } else
-        echo 'Proverite sve informacije';
+    } else {
+        $message = 'Već postoji taj korisnik! Promenite korisničko ime/email!';
+    }
+} else {
+    $message = 'Proverite sve informacije';
 }
 ?>
 <style>
@@ -42,6 +43,9 @@ if (isset($_POST['username']) && isset($_POST['password']) && $_POST['email'] &&
             <input type="text" id="username" name="username" class="form-control" placeholder="Korisničko ime" required="" autofocus="">
             <label for="password" class="visually-hidden">Šifra</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Šifra" required="">
+            <label>
+                <?php echo $message; ?>
+            </label>
             <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Registruj se</button>
             <p class="text-muted mt-1">Već imate nalog? <a href="login.php">Uloguj se!</a></p>
         </form>

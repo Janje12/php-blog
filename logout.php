@@ -1,14 +1,12 @@
 <?php
-session_start();
+
 include('components/header.php');
 require_once('models/user.php');
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $_SESSION['username'] = null;
-    if (User::logout($username)) {
-        header("refresh:2;url=login.php");
-    }
+    session_destroy();
+    header("refresh:2;url=login.php");
 }
 ?>
 <style>

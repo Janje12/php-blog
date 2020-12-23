@@ -2,16 +2,13 @@
 include('components/header.php');
 include('components/navbar.php');
 require_once('models/post.php');
-//print_r($_SESSION);
-if (!isset($_SESSION['username']) || !isset($_SESSION['userID'])) {
-    header('Location: ' . 'login.php');
-}
+
 if (!isset($_POST['title']) && !isset($_POST['content'])) {
     $message = 'Naslov i sadržaj ne smeju biti prazni!';
 } else {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-    $userID = $_SESSION['userID'];
+    $title = htmlspecialchars($_POST['title']);
+    $content = htmlspecialchars( $_POST['content']);
+    $userID =  htmlspecialchars($_SESSION['userID']);
     $post = new Post($title, $content, $userID);
     if (Post::addPost($post)) {
         $message = 'Uspešno ste napravili novu objavu!';

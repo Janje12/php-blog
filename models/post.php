@@ -72,7 +72,8 @@ class Post
         return $post;
     }
 
-    public static function ratePost($postID, $rating) {
+    public static function ratePost($postID, $rating)
+    {
         $db = new Database();
         $post = $db->updatePost($postID, 'rating', $rating);
         return $post;
@@ -80,15 +81,19 @@ class Post
 
     public static function getlHtml($post)
     {
+        $db = new Database();
         $postID = $post['postID'];
         $title = $post['title'];
         $content = $post['content'];
         $rating = $post['rating'];
+        $user = $db->findUser('userID', $post['userID']);
+        $username = $user['username'];
         $dateCreated = substr($post['datePosted'], 0, 10);
         $html =
-        "<div class=\"card mb-3\">
+            "<div class=\"card mb-3\">
             <div class=\"card-header\">
-                {$title}
+                <h5>{$title}</h5>
+                <p class=\"text-muted\">Objavio: ${username}</p>
             </div>
             <div class=\"card-body\">
                 <p class=\"card-text\">{$content}</p>
@@ -119,10 +124,11 @@ class Post
         $title = $post['title'];
         $content = $post['content'];
         $rating = $post['rating'];
+        $dateCreated = $post['datePosted'];
         $html =
-        "<div class=\"card mb-3\">
+            "<div class=\"card mb-3\">
             <div class=\"card-header\">
-                {$title}
+                <h5>{$title}</h5>
             </div>
             <div class=\"card-body\">
                 <p class=\"card-text\">{$content}</p>
@@ -134,7 +140,14 @@ class Post
                 </div>
             </div>
             <div class=\"card-footer\">
-                {$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i>
+            <div class=\"row\">
+                <div class=\"col-5\">
+                    {$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i>
+                </div>
+                <div class=\"col-7 d-flex justify-content-end\">
+                <a href=\"search-posts.php?filter=datePosted&value={$dateCreated}\" class=\"text-muted mb-0\">{$dateCreated}</a>
+                </div>
+            </div>
             </div>
         </div>";
         return $html;

@@ -4,9 +4,6 @@ include('components/navbar.php');
 require_once('models/user.php');
 require_once('models/post.php');
 // print_r($_SESSION);
-if (!isset($_SESSION['username']) || !isset($_SESSION['userID'])) {
-	header('Location: ' . 'login.php');
-}
 $usersPosts = Post::findPosts("userID", $_SESSION['userID']);
 $message = '';
 if (isset($_POST['postID'])) {

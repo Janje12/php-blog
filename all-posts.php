@@ -4,9 +4,6 @@ include('components/navbar.php');
 require_once('models/user.php');
 require_once('models/post.php');
 
-if (!isset($_SESSION['username']) || !isset($_SESSION['userID'])) {
-    header('Location: ' . 'login.php');
-}
 $usersPosts = Post::findPosts("userID !", $_SESSION['userID']);
 $message = '';
 if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentRating'])) {

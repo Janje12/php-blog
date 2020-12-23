@@ -4,11 +4,11 @@ require_once('db/dbconnect.php');
 require_once('models/user.php');
 $message = '';
 if (isset($_POST['username']) && isset($_POST['password']) && $_POST['email'] && $_POST['firstName'] && $_POST['lastName']) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
+    $username =  htmlspecialchars($_POST['username']);
+    $password =  htmlspecialchars($_POST['password']);
+    $email =  htmlspecialchars($_POST['email']);
+    $firstName =  htmlspecialchars($_POST['firstName']);
+    $lastName =  htmlspecialchars($_POST['lastName']);
     $user = new User($firstName, $lastName, $username, $password, $email);
     if (User::register($user)) {
         $message = 'Uspešno ste se registrovali!';

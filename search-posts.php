@@ -4,9 +4,6 @@ include('components/navbar.php');
 require_once('models/user.php');
 require_once('models/post.php');
 
-if (!isset($_SESSION['username']) || !isset($_SESSION['userID'])) {
-    header('Location: ' . 'login.php');
-}
 $message = '';
 $foundPosts = [];
 if (isset($_GET['filter']) && isset($_GET['value'])) {

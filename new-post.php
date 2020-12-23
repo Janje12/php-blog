@@ -3,11 +3,13 @@ include('components/header.php');
 include('components/navbar.php');
 require_once('models/post.php');
 
-if (!isset($_POST['title']) && !isset($_POST['content'])) {
+$message = '';
+if (isset($_POST['action']) && (!isset($_POST['title']) && !isset($_POST['content']))) {
     $message = 'Naslov i sadržaj ne smeju biti prazni!';
-} else {
+}
+if (isset($_POST['action']) && isset($_POST['title']) && isset($_POST['content'])) {
     $title = htmlspecialchars($_POST['title']);
-    $content = htmlspecialchars( $_POST['content']);
+    $content = htmlspecialchars($_POST['content']);
     $userID =  htmlspecialchars($_SESSION['userID']);
     $post = new Post($title, $content, $userID);
     if (Post::addPost($post)) {
@@ -22,6 +24,7 @@ if (!isset($_POST['title']) && !isset($_POST['content'])) {
     <div class="row mt-5 d-flex justify-content-center">
         <div class="col-6">
             <form method="POST">
+                <input type="hidden" name="action" value="">
                 <div class="input-group input-group-lg mb-3">
                     <label class="col-12 text-muted">Naslov:</label>
                     <input type="text" name="title" class="form-control" placeholder="Naslov">

@@ -25,7 +25,7 @@ if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentR
             <p class="text-muted"><?php echo $message; ?></p>
             <?php
             foreach ($usersPosts as $post) {
-                echo Post::getlHtml($post);
+                echo Post::getlHtml($post, false);
             }
             ?>
         </div>

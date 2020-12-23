@@ -14,6 +14,19 @@ if (isset($_GET['filter']) && isset($_GET['value'])) {
     if (count($foundPosts) == 0)
         $message = 'Ne postoje objave sa tim filterom!';
 }
+if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentRating'])) {
+    $postID = $_POST['postID'];
+    $rating = $_POST['rating'];
+    $currentRating = $_POST['currentRating'];
+    print_r(Post::ratePost($postID, $currentRating + $rating));
+    echo 'test';
+    if (Post::ratePost($postID, $currentRating + $rating)) {
+        $message = 'Uspešno ste ocenili objavu!';
+        header('Location: ' . 'search-posts.php?filter='.$_GET['filter'].'&value='.$_GET['value']);
+    } else {
+        $message = 'Greška pri ocenivanju objave! Pokušajte ponovo kasnije!';
+    }
+}
 ?>
 <div class="container">
     <form>
@@ -32,6 +45,8 @@ if (isset($_GET['filter']) && isset($_GET['value'])) {
                     echo "<option {$selected} value=\"rating-higher\">Ocena veća od</option>";
                     $selected = $filter === "rating-lower" ? "selected" : "";
                     echo "<option {$selected} value=\"rating-lower\">Ocena manja od</option>";
+                    $selected = $filter === "username" ? "selected" : "";
+                    echo "<option {$selected} value=\"username\">Autor</option>";
                     ?>
                 </select>
             </div>
@@ -51,7 +66,7 @@ if (isset($_GET['filter']) && isset($_GET['value'])) {
             <p class="text-muted"></p>
             <?php
             foreach ($foundPosts as $post) {
-                echo Post::getlHtml($post);
+                echo Post::getlHtml($post, false);
             }
             ?>
         </div>

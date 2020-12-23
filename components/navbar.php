@@ -2,19 +2,20 @@
 if (!isset($_SESSION['username']) || !isset($_SESSION['userID'])) {
   header('Location: ' . 'login.php');
 }
-if (isset($_POST['darkmode'])) {
-  if ($_POST['darkmode'] == 1)
-    setcookie('darkmode', $_POST['darkmode'], time() + 60 * 60 * 24 * 30, "", "" . false, false);
-  else
-    setcookie("darkmode", "", time() - 3600);
-  header("Location: " . $_SERVER['REQUEST_URI']);
-}
 $icon = 'moon';
 $color = 'light';
 if (isset($_COOKIE['darkmode'])) {
   $icon = 'sun';
   $color = 'dark';
 }
+if (isset($_POST['darkmode'])) {
+  if ($_POST['darkmode'] == 1)
+    setcookie('darkmode', $_POST['darkmode'], time() + 60 * 60 * 24 * 30, "", "" . false, false);
+  else
+    setcookie("darkmode", "", time() - 3600);
+  header("Refresh:0;url=" . $_SERVER['REQUEST_URI']);
+}
+
 ?>
 <nav class="navbar navbar-expand-lg navbar-<?php echo $color . " bg-" . $color; ?>">
   <div class="container-fluid">
@@ -37,6 +38,9 @@ if (isset($_COOKIE['darkmode'])) {
           <a class="nav-link" href="search-posts.php">Pronađi objave</a>
         </li>
       </ul>
+      <div class="d-flex justify-content-center flex-fill">
+        <?php echo "Dobrodošli " . $_SESSION['username']; ?>
+      </div>
       <form class="mt-3" action="search-posts.php">
         <div class="input-group">
           <input type="hidden" name="filter" value="title">

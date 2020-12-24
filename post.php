@@ -8,17 +8,26 @@ $canDelete = false;
 if (isset($_GET['postID'])) {
 	$postID = $_GET['postID'];
 	if (Post::findPosts('postID', $postID)) {
-        $foundPost = Post::findPosts("postID", $postID);
-        $canDelete = $_SESSION['userID'] == $foundPost[0]['userID'] ? true : false;
+		$foundPost = Post::findPosts("postID", $postID);
+		$canDelete = $_SESSION['userID'] == $foundPost[0]['userID'] ? true : false;
 	} else {
 		$message = 'Greška! Ta objava ne postoji više!';
 	}
 }
 
 ?>
+<style>
+	.link-light {
+		color:black;
+		text-decoration: none;
+	}
+</style>
 <div class="container">
 	<div class="row mt-4 d-flex justify-content-end">
-		<?php echo $message; ?>
+		<div class="col-6">
+			<a class="link-light" href="index.php"><button class="btn btn-outline-dark">&nbsp;<i class="fa fa-arrow-left"></i>&nbsp;</a>
+			</button>
+		</div>
 		<div class="col-4">
 			<form method="POST" action="new-post.php">
 				<button class="btn btn-outline-success" type="submit">Dodaj novu objavu! <i class="fa fa-edit"></i> </button>

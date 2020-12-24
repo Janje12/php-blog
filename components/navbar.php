@@ -15,6 +15,7 @@ if (isset($_POST['darkmode'])) {
     setcookie("darkmode", "", time() - 3600);
   header("Refresh:0;url=" . $_SERVER['REQUEST_URI']);
 }
+$active = "active";
 
 ?>
 <nav class="navbar navbar-expand-lg navbar-<?php echo $color . " bg-" . $color; ?>">
@@ -26,16 +27,16 @@ if (isset($_POST['darkmode'])) {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Početna</a>
+          <a class="nav-link <?php echo $_SERVER['REQUEST_URI'] === "/index.php" ? $active : ""; ?>" aria-current="page" href="index.php">Početna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="top-posts.php">Top objave</a>
+          <a class="nav-link <?php echo $_SERVER['REQUEST_URI'] === "/top-posts.php" ? $active : ""; ?>" href="top-posts.php">Top objave</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="all-posts.php">Sve objave</a>
+          <a class="nav-link <?php echo $_SERVER['REQUEST_URI'] === "/all-posts.php" ? $active : ""; ?>" href="all-posts.php">Sve objave</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="search-posts.php">Pronađi objave</a>
+          <a class="nav-link <?php echo $_SERVER['REQUEST_URI'] === "/search-posts.php" ? $active : ""; ?>" href="search-posts.php">Pronađi objave</a>
         </li>
       </ul>
       <div class="d-flex justify-content-center flex-fill">

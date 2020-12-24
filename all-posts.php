@@ -5,26 +5,24 @@ require_once('models/user.php');
 require_once('models/post.php');
 
 $usersPosts = Post::findPosts("userID !", $_SESSION['userID']);
-$message = '';
-if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentRating'])) {
-    $postID = $_POST['postID'];
-    $rating = $_POST['rating'];
-    $currentRating = $_POST['currentRating'];
-    print_r(Post::ratePost($postID, $currentRating + $rating));
-    echo 'test';
-    if (Post::ratePost($postID, $currentRating + $rating)) {
-        $message = 'Uspešno ste ocenili objavu!';
-        header('Location: ' . 'all-posts.php');
-    } else {
-        $message = 'Greška pri ocenivanju objave! Pokušajte ponovo kasnije!';
-    }
-}
 $pageNo = 1;
 $shownPosts = $usersPosts;
 if (isset($_GET['pageNo'])) {
     $pageNo = $_GET['pageNo'];
 }
 $shownPosts = array_splice($shownPosts, ($pageNo - 1) * 3, 3);
+$message = '';
+if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentRating'])) {
+    $postID = $_POST['postID'];
+    $rating = $_POST['rating'];
+    $currentRating = $_POST['currentRating'];
+    if (Post::ratePost($postID, $currentRating + $rating)) {
+        $message = 'Uspešno ste ocenili objavu!';
+        header("Location: " . "all-posts.php?pageNo={$pageNo}");
+    } else {
+        $message = 'Greška pri ocenivanju objave! Pokušajte ponovo kasnije!';
+    }
+}
 ?>
 <div class="container">
     <div class="row no-gutters mt-4 d-flex justify-content-center">

@@ -33,7 +33,7 @@ $shownPosts = array_splice($shownPosts, ($pageNo - 1) * 3, 3);
             <p class="text-muted"><?php echo $message; ?></p>
             <?php
             foreach ($shownPosts as $post) {
-                echo Post::getlHtml($post, true);
+                echo Post::getlHtml($post, true, false, true);
             }
             echo "<form class=\"d-flex justify-content-center\">";
             for ($i = 1; $i <= ceil(count($usersPosts ) + 2) / 3; $i++) {

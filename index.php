@@ -8,7 +8,7 @@ $usersPosts = Post::findPosts("userID", $_SESSION['userID']);
 $pageNo = 1;
 $shownPosts = $usersPosts;
 if (isset($_GET['pageNo'])) {
-	$pageNo = $_GET['pageNo'];	
+	$pageNo = $_GET['pageNo'];
 }
 $shownPosts = array_splice($shownPosts, ($pageNo - 1) * 3, 3);
 
@@ -26,6 +26,7 @@ if (isset($_POST['postID'])) {
 ?>
 <div class="container">
 	<div class="row mt-4 d-flex justify-content-end">
+		<?php echo $message; ?>
 		<div class="col-4">
 			<form method="POST" action="new-post.php">
 				<button class="btn btn-outline-success" type="submit">Dodaj novu objavu! <i class="fa fa-edit"></i> </button>
@@ -38,10 +39,10 @@ if (isset($_POST['postID'])) {
 			<p class="text-muted"><?php echo $message; ?></p>
 			<?php
 			foreach ($shownPosts as $post) {
-				echo Post::getlHtml($post, false);
+				echo Post::getlHtml($post, false, true, true);
 			}
 			echo "<form class=\"d-flex justify-content-center\">";
-			for ($i = 1; $i <= ceil((count($usersPosts) + 2) / 3)	; $i++) {
+			for ($i = 1; $i <= ceil(count($usersPosts) / 3); $i++) {
 				$selected = $i == $pageNo ? "btn-dark" : "btn-light";
 				echo "<button name=\"pageNo\" value=\"{$i}\" class=\"btn btn-lg {$selected} mx-1\">{$i}</button>";
 			}

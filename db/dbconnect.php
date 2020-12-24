@@ -177,8 +177,10 @@ class Database
 	{
 		if (!$this->conn) return false;
 		try {
-			$sql = "DELETE FROM posts WHERE postID LIKE '" . $postID . "'";
-			return mysqli_query($this->conn, $sql);
+			$sql = "DELETE FROM posts WHERE postID LIKE ?";
+			$stmt = mysqli_prepare($this->conn, $sql);
+			$stmt->bind_param("i", $postID);
+			return $stmt->execute();
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

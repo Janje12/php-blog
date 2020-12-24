@@ -66,7 +66,7 @@ if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentR
             <p class="text-muted"></p>
             <?php
             foreach ($foundPosts as $post) {
-                echo Post::getlHtml($post, false);
+                echo Post::getlHtml($post, false, false, true);
             }
             ?>
         </div>

@@ -84,7 +84,7 @@ class Post
         return $post;
     }
 
-    public static function getlHtml($post, $canRate)
+    public static function getlHtml($post, $canRate, $canDelete, $shortenText)
     {
         $db = new Database();
         $postID = $post['postID'];
@@ -94,27 +94,28 @@ class Post
         $user = $db->findUser('userID', $post['userID']);
         $username = $user['username'];
         $dateCreated = substr($post['datePosted'], 0, 10);
+        $contentHtml = "{$content}";
+        if (strlen($content) > 250 && $shortenText)
+            $contentHtml = Post::getContentHtml($postID, $content);
+        $deleteHtml = "";
+        if ($canDelete)
+            $deleteHtml = Post::getDeleteHtml($postID);
         $rateHtml = "<div class=\"col-5\">{$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i></div>";
-        if ($canRate) {
-            $rateHtml = 
-            "<div class=\"col-1\">{$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i></div>
-            <div class=\"col-4 mb-0\">
-            <form method=\"POST\" class=\"mb-0\">
-            <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
-            <input type=\"hidden\" name=\"currentRating\" value=\"{$rating}\">
-            <button type=\"submit\" name=\"rating\" value=\"1\" class=\"btn btn-success\"><i class=\"fa fa-arrow-up\"></i></button>
-            <button type=\"submit\" name=\"rating\" value=\"-1\" class=\"btn btn-danger\"><i class=\"fa fa-arrow-down\"></i></button>
-            </form>
-            </div>";
-        }
+        if ($canRate)
+            $rateHtml = Post::getRateHtml($postID, $rating);
         $html =
             "<div class=\"card mb-3\">
             <div class=\"card-header\">
+                <div class=\"row\">
+                <div class=\"col-11\">
                 <h5>{$title}</h5>
                 <p class=\"text-muted\">Objavio: <a class=\"link-secondary\" href=\"search-posts.php?filter=username&value={$username}\">${username}</a></p>
+                </div>
+                <div class=\"col-1\">{$deleteHtml}</div>
+                </div>
             </div>
             <div class=\"card-body\">
-                <p class=\"card-text\">{$content}</p>
+                <p class=\"card-text\">{$contentHtml}</p>
             </div>
             <div class=\"card-footer\">
             <div class=\"row\">
@@ -128,4 +129,32 @@ class Post
         return $html;
     }
 
+    private static function getContentHtml($postID, $content)
+    {
+        $content = substr($content, 0, 250);
+        return "{$content}...<a class=\"text-muted\" href=\"post.php?postID={$postID}\"><br>Nastavi sa čitanjem</a>";
+    }
+
+    private static function getDeleteHtml($postID)
+    {
+        return
+            "<form method=\"POST\" action=\"index.php\">
+            <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
+            <button type=\"submit\" class=\"btn btn-danger\"><i class=\"fa fa-trash\"></i></button>
+        </form>";
+    }
+
+    private static function getRateHtml($postID, $rating)
+    {
+        return
+            "<div class=\"col-1\">{$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i></div>
+        <div class=\"col-4 mb-0\">
+            <form method=\"POST\" class=\"mb-0\">
+                <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
+                <input type=\"hidden\" name=\"currentRating\" value=\"{$rating}\">
+                <button type=\"submit\" name=\"rating\" value=\"1\" class=\"btn btn-success\"><i class=\"fa fa-arrow-up\"></i></button>
+                <button type=\"submit\" name=\"rating\" value=\"-1\" class=\"btn btn-danger\"><i class=\"fa fa-arrow-down\"></i></button>
+            </form>
+        </div>";
+    }
 }

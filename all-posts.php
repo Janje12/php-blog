@@ -34,7 +34,7 @@ if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentR
                 echo Post::getlHtml($post, true, false, true);
             }
             echo "<form class=\"d-flex justify-content-center\">";
-            for ($i = 1; $i <= ceil(count($usersPosts ) + 2) / 3; $i++) {
+            for ($i = 1; $i <= ceil(count($usersPosts) + 2) / 3; $i++) {
                 $selected = $i == $pageNo ? "btn-dark" : "btn-light";
                 echo "<button name=\"pageNo\" value=\"{$i}\" class=\"btn btn-lg {$selected} mx-1\">{$i}</button>";
             }

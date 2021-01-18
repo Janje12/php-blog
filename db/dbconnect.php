@@ -57,7 +57,7 @@ class Database
 		try {
 			$sql = "SELECT * FROM users ";
 			if ($type !== "" && $value !== "") {
-				$sql .= "WHERE " . $type . "= ?";
+				$sql .= "WHERE " . $type . "= ?"; // Poziva se iz metode u koje ne moze da se prosledi nista drugo osim vec zadato
 				$stmt = mysqli_prepare($this->conn, $sql);
 				$stmt->bind_param("s", $value);
 				$stmt->execute();

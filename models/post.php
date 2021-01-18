@@ -6,7 +6,7 @@ class Post
 
     private $postID;
     private $title, $content, $rating, $userID;
-    private $dateCreated;
+    private $dateCreated; // u bazi se ubacuje datum 
 
     function __construct($title, $content, $userID)
     {
@@ -109,7 +109,7 @@ class Post
                 <div class=\"row\">
                 <div class=\"col-11\">
                 <h5>{$title}</h5>
-                <p class=\"text-muted\">Objavio: <a class=\"link-secondary\" href=\"search-posts.php?filter=username&value={$username}\">${username}</a></p>
+                <p class=\"text-muted\">Objavio/la: <a class=\"link-secondary\" href=\"search-posts.php?filter=username&value={$username}\">${username}</a></p>
                 </div>
                 <div class=\"col-1\">{$deleteHtml}</div>
                 </div>
@@ -129,7 +129,7 @@ class Post
         return $html;
     }
 
-    private static function getContentHtml($postID, $content)
+    private static function getContentHtml($postID, $content) // trebao sam nazvati ShortenContentHtml 
     {
         $content = substr($content, 0, 250);
         return "{$content}...<a class=\"text-muted\" href=\"post.php?postID={$postID}\"><br>Nastavi sa čitanjem</a>";
@@ -148,7 +148,7 @@ class Post
     {
         return
             "<div class=\"col-1\">{$rating} <i style=\"color: gold;\" class=\"fa fa-star\"></i></div>
-        <div class=\"col-4 mb-0\">
+            <div class=\"col-4 mb-0\">
             <form method=\"POST\" class=\"mb-0\">
                 <input type=\"hidden\" name=\"postID\" value=\"{$postID}\">
                 <input type=\"hidden\" name=\"currentRating\" value=\"{$rating}\">

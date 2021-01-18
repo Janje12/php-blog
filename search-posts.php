@@ -18,8 +18,6 @@ if (isset($_POST['postID']) && isset($_POST['rating']) && isset($_POST['currentR
     $postID = $_POST['postID'];
     $rating = $_POST['rating'];
     $currentRating = $_POST['currentRating'];
-    print_r(Post::ratePost($postID, $currentRating + $rating));
-    echo 'test';
     if (Post::ratePost($postID, $currentRating + $rating)) {
         $message = 'Uspešno ste ocenili objavu!';
         header('Location: ' . 'search-posts.php?filter='.$_GET['filter'].'&value='.$_GET['value']);

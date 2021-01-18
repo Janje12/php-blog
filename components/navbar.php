@@ -40,7 +40,7 @@ $active = "active";
         </li>
       </ul>
       <div class="d-flex justify-content-center flex-fill">
-        <?php echo "Dobrodošli " . $_SESSION['username']; ?>
+        <?php echo "Dobrodošli/a " . $_SESSION['username']; ?>
       </div>
       <form class="mt-3" action="search-posts.php">
         <div class="input-group">
